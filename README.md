@@ -8,7 +8,7 @@
 | -e | --env <env>              | 编译环境(可以使用 dev?level=1&debug=true 来传参)  |
 | -n | --envname <env name>     | 项目中的环境变量名(会在项目是生成 \_\_TTD_ENV\_\_ 环境变量) | (default: "\_\_TTD_ENV\_\_")  |
 | -t | --target <url>           | 部署地址  |
-|    | --no-deploy boolean         | 是否部署 | (default: true)  |
+|    | --no-deploy <boolean>    | 不部署(默认在生产环境且指定target,package时自动部署) |
 | -d | --dist <directory>       | 打包目录  |
 | -p | --package <package name> | 默认包名  |
 | -o | --output <directory>     | 输出目录 | (default: "output")  |

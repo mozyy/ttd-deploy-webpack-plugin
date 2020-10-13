@@ -17,7 +17,7 @@ class TTDDeployWebpackPlugin {
    *   -E, --envs <envs>             增加编译环境('{"dev": {}, "prod": {"target": "http:...","package": "name"}}') (default: {})
    *   -e, --env <env>               编译环境
    *   -n, --envname <env name>      项目中的环境变量名 (default: "__TTD_ENV__")
-   *   -D, --deploy boolean          是否部署 (default: true)
+   *       --no-deploy <boolean>     不部署(默认在生产环境且指定target,package时自动部署)
    *   -d, --dist <directory>        打包目录
    *   -p, --package <package name>  默认包名
    *   -o, --output <directory>      输出目录 (default: "output")
