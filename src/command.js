@@ -56,7 +56,7 @@ const setProjectEnv = async (envs, program) => {
     }))
   }
   // console.log(`编译环境为: process.env.${program.envname}="${program.env}"`)
-  return { [program.envname]: `'${program.env}'` }
+  return `"${program.env}"`
 }
 
 module.exports.initCommand = initCommand;

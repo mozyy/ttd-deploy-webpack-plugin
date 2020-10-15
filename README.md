@@ -75,3 +75,6 @@ export default config
 
 ### 命令行中
 在 cmd 执行 `npm run start -- -e prod?level=1` 可以用 ? 来传更多参数
+
+## 已知问题
+如果需要动态注入全局环境变量, v2中使用 webpack v4.13.0 之后的 [DefinePlugin.runtimeValue](https://webpack.js.org/plugins/define-plugin/#runtime-values-via-runtimevalue),但有些项目使用的webpack版本较低, 所以在v1版本使用的[DefinePlugin](https://webpack.js.org/plugins/define-plugin/#usage), 但可能会有未知的问题.

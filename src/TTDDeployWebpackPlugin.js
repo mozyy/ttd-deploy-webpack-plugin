@@ -30,7 +30,12 @@ class TTDDeployWebpackPlugin {
     console.log('ttd option: ', program.opts());
 
     this.program = program
-    this.isSetEnv = false
+    this.defineEnv = null
+    this.plugins = [
+      new DefinePlugin({
+        [program.envname]: DefinePlugin.runtimeValue(()=> this.defineEnv)
+      }),
+    ];
   }
 
   apply(compiler) {
@@ -68,9 +73,19 @@ class TTDDeployWebpackPlugin {
     //     }
     //   });
     // })
+    compiler.hooks.run.tapAsync(pluginName, (compilation, callback) => {
+      this.setProjectEnv(compiler, callback)
+    })
+    compiler.hooks.watchRun.tapAsync(pluginName, (compilation, callback) => {
+      this.setProjectEnv(compiler, callback)
+    })
 
 
-    compiler.plugin('done', async (compilation) => {
+    this.plugins.forEach(plugin => {
+      plugin.apply(compiler);
+    });
+
+    compiler.hooks.done.tap(pluginName, async (compilation) => {
       await Promise.resolve(); // 输出打印在最后
       const {envname, env, output, dist, packageName, target, deploy, cookie} = command.getOpts(this.program);
       console.log(`环境[${envname}]: ${env}`);
@@ -87,30 +102,18 @@ class TTDDeployWebpackPlugin {
       }
     });
 
-    // 生产环境勾子
-    compiler.plugin('before-run', (compilation, callback) => {
-      this.setProjectEnv(compiler, callback)
-    })
-
-    // 开发环境勾子
-    compiler.plugin('watch-run', (compilation, callback) => {
-      this.setProjectEnv(compiler, callback)
-    })
-
   }
 
   // 设置环境变量
   setProjectEnv(compiler, callback) {
     // 只设置一次环境变量
-    if (this.isSetEnv) {
+    if (this.defineEnv) {
       callback()
       return
     }
     const envs = Object.keys(this.program.envs);
     command.setProjectEnv(envs, this.program).then(env => {
-      const plugin = new DefinePlugin(env);
-      plugin.apply(compiler);
-      this.isSetEnv = true;
+      this.defineEnv = env
       callback();
     })
   }
