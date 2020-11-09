@@ -18,7 +18,7 @@ const initCommand = (options, config)=>{
     .option('-o, --output <directory>', '输出目录', 'output')
     .option('-c, --cookie <string>', 'cookie', 'fb_user=%E5%91%A8%E5%BF%97%E5%BC%BA') // `fb_user=${encodeURIComponent('周志强')}\`
 
-    if (config.allowUnknownOption) {
+    if (config && config.allowUnknownOption) {
         program.allowUnknownOption();
     }
 
