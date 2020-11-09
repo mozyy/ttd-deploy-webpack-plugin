@@ -1,7 +1,7 @@
 const { Command } = require('commander');
 const { version } = require('../package.json')
 
-const initCommand = (options)=>{
+const initCommand = (options, config)=>{
   const program = new Command();
   program.version(version);
 
@@ -17,6 +17,10 @@ const initCommand = (options)=>{
     .option('-p, --package <package name>', '默认包名')
     .option('-o, --output <directory>', '输出目录', 'output')
     .option('-c, --cookie <string>', 'cookie', 'fb_user=%E5%91%A8%E5%BF%97%E5%BC%BA') // `fb_user=${encodeURIComponent('周志强')}\`
+
+    if (config.allowUnknownOption) {
+        program.allowUnknownOption();
+    }
 
   program.parse(options, { from: 'user' });
   program.parse(process.argv);

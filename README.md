@@ -33,11 +33,13 @@ module.exports = {
     new TTDDeployWebpackPlugin([
       '-E', JSON.stringify({
       dev: {},
-      prod:{target: 'http://192.168.88.122:9990/upfile.php?pk_id=30'},
+      prod:{target: 'http://192.168.88.122:9990/upfile.php?pk_id=99999'},
     }),
     '-d', 'dist',
-    '-p', 'ttd_manager',
-    ]),
+     '-p', 'package_name',
+     ], {
+       allowUnknownOption: true,
+     }),
   ]
 }
 ```

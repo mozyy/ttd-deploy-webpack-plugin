@@ -23,9 +23,12 @@ class TTDDeployWebpackPlugin {
    *   -o, --output <directory>      输出目录 (default: "output")
    *   -c, --cookie string           cookie
    *   -h, --help                    display help for command
+   * @param {*} config
+   * allowUnknownOption boolean allow unknown option
+   * 
    */
-  constructor(option) {
-    const program = command.initCommand(option);
+  constructor(option, config) {
+    const program = command.initCommand(option, config);
 
     console.log('ttd option: ', program.opts());
 
