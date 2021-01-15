@@ -83,6 +83,18 @@ class TTDDeployWebpackPlugin {
       this.setProjectEnv(compiler, callback)
     })
 
+    compiler.hooks.compilation.tap(pluginName, compilation => {
+      compilation.hooks.normalModuleLoader.tap(pluginName, (loaderContext, module) => {
+        if (/.scss/.test(module.userRequest)) {
+          module.loaders.push({
+            loader: 'sass-loader', // Path to loader
+            options: {
+              prependData: "$" + this.program.envname + ":" + this.defineEnv + ";",
+            }
+          });
+        }
+      });
+    });
 
     this.plugins.forEach(plugin => {
       plugin.apply(compiler);
