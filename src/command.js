@@ -42,8 +42,10 @@ const getOpts = (program) => {
 
 // 设置项目中的环境变量
 const setProjectEnv = async (envs, program) => {
+  const envString = (program.env || '').trim();
+  const envName = envString.split('?')[0]; // 可以使用 dev?level=1&debug=true 来传参
 
-  if (!envs.includes(program.env)) {
+  if (!envs.includes(envName)) {
     console.log(`请选择环境( [${envs}] ):`)
     // 接收数据为 utf8 字符串，
     // 如果没有设置字符编码，则会接收到 Buffer 对象。
