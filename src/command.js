@@ -17,6 +17,7 @@ const initCommand = (options, config)=>{
     .option('-p, --package <package name>', '默认包名')
     .option('-o, --output <directory>', '输出目录', 'output')
     .option('-c, --cookie <string>', 'cookie', 'fb_user=%E5%91%A8%E5%BF%97%E5%BC%BA') // `fb_user=${encodeURIComponent('周志强')}\`
+    .option('-z, --zipPath <string>', 'zip文件的目录结构', 'dist') // `fb_user=${encodeURIComponent('周志强')}\`
 
     if (config && config.allowUnknownOption) {
         program.allowUnknownOption();
@@ -30,13 +31,13 @@ const initCommand = (options, config)=>{
 
 // 获得command的参数
 const getOpts = (program) => {
-  const {envname, env, output, dist, package: packageDefault, envs, deploy, cookie} = program;
+  const {envname, env, output, dist, package: packageDefault, envs, deploy, cookie, zipPath} = program;
   const envConfig = envs[env]
   const packageName = (envConfig && envConfig.package) || packageDefault
   const target = envConfig && envConfig.target
 
   return {
-    envname, env, output, dist, packageName, envs, deploy, target, envConfig, cookie
+    envname, env, output, dist, packageName, envs, deploy, target, envConfig, cookie, zipPath
   }
 }
 

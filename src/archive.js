@@ -6,7 +6,7 @@ const archiver = require('archiver');
 
 
 // 压缩指定文件夹: distPath 到 outputPath/packageName.zip
-const archiveDist = async (outputPath, distPath, packageName) => {
+const archiveDist = async (outputPath, distPath, packageName, zipPath="dist") => {
   const outputFile = path.resolve(outputPath, packageName + '.zip')
   console.log(`开始压缩文件: ${distPath} => ${outputFile}`)
   await new Promise((resolve, reject) => fs.stat(outputPath, (err, stats) => {
@@ -31,7 +31,7 @@ const archiveDist = async (outputPath, distPath, packageName) => {
   // 管道连接
   archive.pipe(output)
   // 压缩文件夹到压缩包
-  archive.directory(distPath, 'dist')
+  archive.directory(distPath, zipPath)
   // 开始压缩
   archive.finalize()
   return new Promise((resolve, reject) => {

@@ -21,6 +21,7 @@ class TTDDeployWebpackPlugin {
    *   -d, --dist <directory>        打包目录
    *   -p, --package <package name>  默认包名
    *   -o, --output <directory>      输出目录 (default: "output")
+   *   -z, --zipPath                 zip文件的目录结构(default: "dist")
    *   -c, --cookie string           cookie
    *   -h, --help                    display help for command
    * @param {*} config
@@ -102,13 +103,13 @@ class TTDDeployWebpackPlugin {
 
     compiler.hooks.done.tap(pluginName, async (compilation) => {
       await Promise.resolve(); // 输出打印在最后
-      const {envname, env, output, dist, packageName, target, deploy, cookie} = command.getOpts(this.program);
+      const {envname, env, output, dist, packageName, target, deploy, cookie, zipPath} = command.getOpts(this.program);
       console.log(`环境[${envname}]: ${env}`);
 
       if (process.env.NODE_ENV === 'production') {
         if (output && dist && packageName) {
           const envOutput = path.resolve(output, env)
-          await archiveDist(envOutput, dist, packageName)
+          await archiveDist(envOutput, dist, packageName, zipPath)
           if (deploy && target) {
             const filePath = path.resolve(envOutput, packageName + '.zip')
             deployHandler(filePath, target, cookie)

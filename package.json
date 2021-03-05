@@ -1,6 +1,6 @@
 {
   "name": "@toolspack/ttd-deploy-webpack-plugin",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "webpack plugin from ttd deploy",
   "main": "index.js",
   "scripts": {

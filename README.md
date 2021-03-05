@@ -12,6 +12,7 @@
 | -p | --package <package name> | 默认包名  |
 | -o | --output <directory>     | 输出目录 | (default: "output")  |
 | -c | --cookie <string>          | cookie              | fb_user=%E5%91%A8%E5%BF%97%E5%BC%BA  |
+| -z | --zipPath <string>          | zip文件的目录结构             | (default: "dist")   |
 | -h | --help                   | 查看帮助说明  |
 
 
@@ -37,6 +38,7 @@ module.exports = {
     }),
     '-d', 'dist',
      '-p', 'package_name',
+     '-z', 'package/dist'
      ], {
        allowUnknownOption: true,
      }),
