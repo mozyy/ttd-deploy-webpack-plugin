@@ -24,6 +24,7 @@ class TTDDeployWebpackPlugin {
    *   -z, --zipPath                 zip文件的目录结构(default: "dist")
    *   -c, --cookie string           cookie
    *   -h, --help                    display help for command
+   *   --no-sass                     不在sass 里注入 环境变量
    * @param {*} config
    * allowUnknownOption boolean allow unknown option
    * 
@@ -83,19 +84,22 @@ class TTDDeployWebpackPlugin {
     compiler.hooks.watchRun.tapAsync(pluginName, (compilation, callback) => {
       this.setProjectEnv(compiler, callback)
     })
-
-    compiler.hooks.compilation.tap(pluginName, compilation => {
-      compilation.hooks.normalModuleLoader.tap(pluginName, (loaderContext, module) => {
-        if (/.scss/.test(module.userRequest)) {
-          module.loaders.push({
-            loader: 'sass-loader', // Path to loader
-            options: {
-              prependData: "$" + this.program.envname + ":" + this.defineEnv + ";",
-            }
-          });
-        }
+      
+    const { sass } = command.getOpts(this.program);
+    if (sass){
+      compiler.hooks.compilation.tap(pluginName, compilation => {
+        compilation.hooks.normalModuleLoader.tap(pluginName, (loaderContext, module) => {
+          if (/.scss/.test(module.userRequest)) {
+            module.loaders.push({
+              loader: 'sass-loader', // Path to loader
+              options: {
+                prependData: "$" + this.program.envname + ":" + this.defineEnv + ";",
+              }
+            });
+          }
+        });
       });
-    });
+    }
 
     this.plugins.forEach(plugin => {
       plugin.apply(compiler);

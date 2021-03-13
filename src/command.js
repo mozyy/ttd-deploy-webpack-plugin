@@ -13,6 +13,7 @@ const initCommand = (options, config)=>{
     // ttd 发包平台 http://192.168.88.122:9990/rd.php
     // .option('-t, --target <url>', '部署地址')
     .option('--no-deploy', '是否部署')
+    .option('--no-sass', '是否在sass注入环境变量')
     .option('-d, --dist <directory>', '打包目录')
     .option('-p, --package <package name>', '默认包名')
     .option('-o, --output <directory>', '输出目录', 'output')
@@ -31,13 +32,13 @@ const initCommand = (options, config)=>{
 
 // 获得command的参数
 const getOpts = (program) => {
-  const {envname, env, output, dist, package: packageDefault, envs, deploy, cookie, zipPath} = program;
+  const {envname, env, output, dist, package: packageDefault, envs, deploy, sass, cookie, zipPath} = program;
   const envConfig = envs[env]
   const packageName = (envConfig && envConfig.package) || packageDefault
   const target = envConfig && envConfig.target
 
   return {
-    envname, env, output, dist, packageName, envs, deploy, target, envConfig, cookie, zipPath
+    envname, env, output, dist, packageName, envs, deploy, sass, target, envConfig, cookie, zipPath
   }
 }
 
