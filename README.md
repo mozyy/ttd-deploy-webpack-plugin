@@ -4,7 +4,7 @@
 | 短参数 | 长参数 | 说明 | 默认 |
 |--|--|--| -- |
 | -V | --version                | output the version number  |
-| -E | --envs <envs>            | 增加编译环境('{"dev": {}, "prod": {"target": "http:...","package": "name"}}') | (default: {})  |
+| -E | --envs <envs>            | 增加编译环境('{"dev": [环境配置](#环境配置), "prod": {"target": "http:...","needRemarks":true,"needFbkey":true,"package": "name"}}}') | (default: {})  |
 | -e | --env <env>              | 编译环境(可以使用 dev?level=1&debug=true 来传参)  |
 | -n | --envname <env name>     | 项目中的环境变量名(会在项目是生成 \_\_TTD_ENV\_\_ 环境变量) | (default: "\_\_TTD_ENV\_\_")  |
 |    | --no-deploy <boolean>    | 不部署(默认在生产环境且指定target,package时自动部署) |
@@ -13,8 +13,17 @@
 | -o | --output <directory>     | 输出目录 | (default: "output")  |
 | -c | --cookie <string>          | cookie              | fb_user=%E5%91%A8%E5%BF%97%E5%BC%BA  |
 | -z | --zipPath <string>          | zip文件的目录结构             | (default: "dist")   |
+| -m | --remarks <string>          | 发布备注 | (default: "")   |
+| -k | --fbkey <string>          | 发布key  | (default: "")   |
 | -h | --help                   | 查看帮助说明  |
 
+## 环境配置:
+| key | 必传 | 类型 | 说明 | 默认 |
+|--|--|--| -- | -- |
+| target | 否 | string | 上传地址  | undefined |
+| needRemarks | 否 | boolean | 是否需要发包备注  | false |
+| needFbkey | 否 | boolean | 是否需要发包key  | false |
+| package | 否 | string | 发包包名  | '' |
 
 ## 使用
 

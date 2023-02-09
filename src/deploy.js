@@ -4,10 +4,11 @@ const fs = require('fs');
 const request = require('request');
 
 // 发布文件到ttd发包平台
-const deployHandler = (filePath, url, cookie) => new Promise((resolve, reject) => {
+const deployHandler = (filePath, url, cookie, params) => new Promise((resolve, reject) => {
   console.log(`开始上传文件: ${filePath}`)
   var formData = {
-    file: fs.createReadStream(filePath)
+    file: fs.createReadStream(filePath),
+    ...params
   };
   const j = request.jar();
   const requestCookie = request.cookie(cookie);
